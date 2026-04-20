@@ -68,7 +68,7 @@ function atualizar(){
 
  carrinho.forEach((item,i)=>{
   let li=document.createElement('li');
-  li.innerHTML = item.nome+' - R$ '+item.preco.toFixed(2)+` <span class='remover' onclick='remover(${i})'>X</span>`;
+ li.innerHTML = item.nome+' - R$ '+item.preco.toFixed(2)+` <button class='remover' onclick='remover(${i})'>Remover</button>`;;
   lista.appendChild(li);
   total+=item.preco;
  });
