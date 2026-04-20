@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>HnSlides</title>
 
 <style>
 body { margin:0; font-family: Arial; background:#0b0b0b; color:white; }
 header { display:flex; justify-content:space-between; padding:15px; background:#111; }
 header h1 { color:#ff3b3b; }
+
 .topbar { background:#ff3b3b; text-align:center; padding:5px; font-size:12px; }
 
 .hero { text-align:center; padding:60px 20px; background: radial-gradient(circle,#300000,#000); }
@@ -18,10 +18,9 @@ header h1 { color:#ff3b3b; }
 .botao { background:#ff3b3b; border:none; padding:10px; border-radius:8px; color:white; cursor:pointer; }
 
 .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:20px; }
-
 .card { background:#1a1a1a; border-radius:15px; padding:10px; }
 
-/* SLIDER SUAVE */
+/* SLIDER */
 .slider {
  position: relative;
  height:160px;
@@ -34,7 +33,7 @@ header h1 { color:#ff3b3b; }
  object-fit:cover;
  position:absolute;
  opacity:0;
- transition: opacity 0.4s ease; /* animação suave */
+ transition: opacity 0.4s ease;
  border-radius:10px;
 }
 
@@ -94,7 +93,7 @@ header h1 { color:#ff3b3b; }
 
 <div class="grid">
 
-<!-- BOB ESPONJA (SEM BOTÕES) -->
+<!-- BOB ESPONJA -->
 <div class="card" data-cat="criativo">
   <div class="slider">
     <img src="imagens/slide1.png" class="ativo zoomable">
@@ -118,6 +117,19 @@ header h1 { color:#ff3b3b; }
   <h3>Slide Shrek</h3>
   <p class="preco">R$ 9,90</p>
   <button class="botao" onclick="add('Slide Shrek',9.9)">Adicionar</button>
+</div>
+
+<!-- CHARLIE BROWN -->
+<div class="card" data-cat="ppt">
+  <div class="slider">
+    <img src="imagens/CharlieBrown1.png" class="ativo zoomable">
+    <img src="imagens/CharlieBrown2.png" class="zoomable">
+    <img src="imagens/CharlieBrown3.png" class="zoomable">
+  </div>
+
+  <h3>Slide Charlie Brown</h3>
+  <p class="preco">R$ 8,00</p>
+  <button class="botao" onclick="add('Slide Charlie Brown',8)">Adicionar</button>
 </div>
 
 </div>
@@ -188,7 +200,7 @@ function finalizarWhatsApp(){
  window.open('https://wa.me/5599999999999?text='+msg);
 }
 
-/* SLIDE + SWIPE + CLICK */
+/* SLIDER + SWIPE */
 document.querySelectorAll('.slider').forEach(slider=>{
  let imgs = slider.querySelectorAll('img');
  let index = 0;
@@ -200,12 +212,6 @@ document.querySelectorAll('.slider').forEach(slider=>{
   imgs[index].classList.add('ativo');
  }
 
- // clique troca
- slider.addEventListener('click', ()=>{
-  mostrar(index+1);
- });
-
- // swipe
  slider.addEventListener('touchstart', e=>{
   startX = e.touches[0].clientX;
  });
@@ -213,29 +219,26 @@ document.querySelectorAll('.slider').forEach(slider=>{
  slider.addEventListener('touchend', e=>{
   let endX = e.changedTouches[0].clientX;
 
-  if(startX - endX > 50) mostrar(index+1); // esquerda
-  else if(endX - startX > 50) mostrar(index-1); // direita
+  if(startX - endX > 50) mostrar(index+1);
+  else if(endX - startX > 50) mostrar(index-1);
  });
 });
 
-/* ZOOM COM TROCA */
+/* ZOOM */
 let imagensAtuais = [];
 let indexZoom = 0;
 
-document.querySelectorAll('.slider').forEach(slider=>{
- let imgs = slider.querySelectorAll('.zoomable');
+document.querySelectorAll('.slider img').forEach((img)=>{
+ img.onclick = (e)=>{
+  e.stopPropagation();
 
- imgs.forEach((img, i)=>{
-  img.onclick = (e)=>{
-   e.stopPropagation();
+  let slider = img.closest('.slider');
+  imagensAtuais = [...slider.querySelectorAll('img')];
+  indexZoom = imagensAtuais.indexOf(img);
 
-   imagensAtuais = [...imgs];
-   indexZoom = i;
-
-   document.getElementById('lightbox').style.display='flex';
-   document.getElementById('imgZoom').src = img.src;
-  }
- });
+  document.getElementById('lightbox').style.display='flex';
+  document.getElementById('imgZoom').src = img.src;
+ }
 });
 
 document.getElementById('imgZoom').onclick = function(e){
