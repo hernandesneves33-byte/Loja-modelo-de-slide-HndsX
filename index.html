@@ -1,12 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modelos de Slide
-    </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slides Escolares</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #eef4ff; }
+    header { background: linear-gradient(90deg, #1976d2, #4fc3f7); color: white; padding: 30px; text-align: center; animation: fadeIn 1.5s ease-in-out; }
+    nav { display: flex; justify-content: center; background: #0d47a1; }
+    nav a { color: white; padding: 14px 20px; text-decoration: none; transition: 0.3s; }
+    nav a:hover { background: #42a5f5; }
+    .container { padding: 20px; text-align: center; }
+    .produtos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .produto { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.2); transition: 0.3s; }
+    .produto:hover { transform: translateY(-10px); box-shadow: 0 12px 20px rgba(0,0,0,0.3); }
+    .produto img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+    .botao { background: #1976d2; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; }
+    .botao:hover { background: #0d47a1; }
+    #carrinho { background: white; margin-top: 30px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    footer { background: #0d47a1; color: white; text-align: center; padding: 10px; margin-top: 30px; }
+    .whatsapp { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 15px; border-radius: 50%; font-size: 20px; text-decoration: none; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px);} to { opacity: 1; transform: translateY(0);} }
+  </style>
 </head>
-<body>
-    
-</body>
+<body><header>
+  <h1>Slides Escolares Profissionais</h1>
+  <p>Veja prévias dos modelos antes de comprar 📊</p>
+</header><nav>
+  <a href="#">Início</a>
+  <a href="#produtos">Modelos</a>
+  <a href="#carrinho">Carrinho</a>
+</nav><div class="container">
+  <h2>Escolha seu modelo</h2>  <div class="produtos"><div class="produto">
+  <img src="https://via.placeholder.com/300x180?text=Slide+B%C3%A1sico" alt="Slide Básico">
+  <h3>Slide Básico</h3>
+  <p>Modelo simples e organizado</p>
+  <p><strong>R$ 10</strong></p>
+  <button class="botao" onclick="adicionar('Slide Básico',10)">Adicionar</button>
+</div>
+
+<div class="produto">
+  <img src="https://via.placeholder.com/300x180?text=Slide+Criativo" alt="Slide Criativo">
+  <h3>Slide Criativo</h3>
+  <p>Com cores e animações</p>
+  <p><strong>R$ 20</strong></p>
+  <button class="botao" onclick="adicionar('Slide Criativo',20)">Adicionar</button>
+</div>
+
+<div class="produto">
+  <img src="https://via.placeholder.com/300x180?text=Slide+Profissional" alt="Slide Profissional">
+  <h3>Slide Profissional</h3>
+  <p>Perfeito para trabalhos importantes</p>
+  <p><strong>R$ 30</strong></p>
+  <button class="botao" onclick="adicionar('Slide Profissional',30)">Adicionar</button>
+</div>
+
+  </div>  <div id="carrinho">
+    <h2>Carrinho</h2>
+    <ul id="lista"></ul>
+    <p><strong>Total: R$ <span id="total">0</span></strong></p>
+    <button class="botao" onclick="finalizarCompra()">Comprar pelo WhatsApp</button>
+  </div>
+</div><footer>
+  <p>© 2026 Slides Escolares</p>
+</footer><a class="whatsapp" href="#" onclick="finalizarCompra()">💬</a>
+
+<script>
+  let carrinho = [];
+
+  function adicionar(nome, preco) {
+    carrinho.push({nome, preco});
+    atualizarCarrinho();
+  }
+
+  function atualizarCarrinho() {
+    let lista = document.getElementById('lista');
+    let total = 0;
+    lista.innerHTML = '';
+
+    carrinho.forEach(item => {
+      let li = document.createElement('li');
+      li.textContent = item.nome + ' - R$ ' + item.preco;
+      lista.appendChild(li);
+      total += item.preco;
+    });
+
+    document.getElementById('total').textContent = total;
+  }
+
+  function finalizarCompra() {
+    if(carrinho.length === 0) {
+      alert('Carrinho vazio!');
+      return;
+    }
+
+    let mensagem = 'Olá, quero comprar slides:%0A';
+    carrinho.forEach(item => {
+      mensagem += '- ' + item.nome + '%0A';
+    });
+
+    let url = 'https://wa.me/5599999999999?text=' + mensagem;
+    window.open(url, '_blank');
+  }
+</script></body>
 </html>
