@@ -1,30 +1,49 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HnSlides</title><style>
+
+<title>HnSlides</title>
+
+<style>
 body { margin:0; font-family: Arial; background:#0b0b0b; color:white; }
 header { display:flex; justify-content:space-between; padding:15px; background:#111; }
 header h1 { color:#ff3b3b; }
 .topbar { background:#ff3b3b; text-align:center; padding:5px; font-size:12px; }
+
 .hero { text-align:center; padding:60px 20px; background: radial-gradient(circle,#300000,#000); }
 .hero span { color:#ff3b3b; }
+
 .botao { background:#ff3b3b; border:none; padding:10px; border-radius:8px; color:white; cursor:pointer; }
+
 .grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; padding:20px; }
+
 .card { background:#1a1a1a; border-radius:15px; padding:10px; }
-.card img { width:100%; border-radius:10px; cursor:pointer; }
-.preco { color:#ff3b3b; }
-.filtro span { background:#222; padding:8px; margin:5px; cursor:pointer; }
-.filtro .ativo { background:#ff3b3b; }
-.carrinho { background:#111; padding:20px; margin:20px; border-radius:15px; }
-.remover { color:red; cursor:pointer; margin-left:10px; }
 
-/* slider */
-.slider { position: relative; height:160px; overflow:hidden; }
-.slider img { width:100%; height:100%; object-fit:cover; display:none; border-radius:10px; }
-.slider img.ativo { display:block; }
+/* SLIDER SUAVE */
+.slider {
+ position: relative;
+ height:160px;
+ overflow:hidden;
+}
 
-/* zoom */
+.slider img {
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ position:absolute;
+ opacity:0;
+ transition: opacity 0.4s ease; /* animação suave */
+ border-radius:10px;
+}
+
+.slider img.ativo {
+ opacity:1;
+ position:relative;
+}
+
+/* ZOOM */
 .lightbox {
  display:none;
  position:fixed;
@@ -35,81 +54,120 @@ header h1 { color:#ff3b3b; }
  align-items:center;
  z-index:999;
 }
+
 .lightbox img {
  max-width:90%;
  max-height:90%;
  border-radius:10px;
+ cursor:pointer;
 }
-</style></head><body><div class="topbar">Compre direto pelo WhatsApp ⚡</div>
-<header><h1>HnSlides</h1></header><section class="hero">
+
+.preco { color:#ff3b3b; }
+
+.filtro span { background:#222; padding:8px; margin:5px; cursor:pointer; }
+.filtro .ativo { background:#ff3b3b; }
+
+.carrinho { background:#111; padding:20px; margin:20px; border-radius:15px; }
+.remover { color:red; cursor:pointer; margin-left:10px; }
+</style>
+</head>
+
+<body>
+
+<div class="topbar">Compre direto pelo WhatsApp ⚡</div>
+
+<header>
+<h1>HnSlides</h1>
+</header>
+
+<section class="hero">
 <h2>Slides que <span>transformam</span></h2>
 <button class="botao">Explorar</button>
-</section><div class="filtro">
+</section>
+
+<div class="filtro">
 <span class="ativo" onclick="filtrar('todos', event)">Todos</span>
 <span onclick="filtrar('criativo', event)">Criativo</span>
 <span onclick="filtrar('canva', event)">Canva</span>
 <span onclick="filtrar('ppt', event)">PPT</span>
-</div><div class="grid"><!-- BOB ESPONJA --><div class="card" data-cat="criativo">
+</div>
+
+<div class="grid">
+
+<!-- BOB ESPONJA (SEM BOTÕES) -->
+<div class="card" data-cat="criativo">
   <div class="slider">
     <img src="imagens/slide1.png" class="ativo zoomable">
     <img src="imagens/slide1-2.png" class="zoomable">
     <img src="imagens/slide1-3.png" class="zoomable">
   </div>
-  <button class="botao" onclick="mudarSlide(this, -1)">⬅</button>
-  <button class="botao" onclick="mudarSlide(this, 1)">➡</button>
+
   <h3>Slide Bob Esponja</h3>
   <p class="preco">R$ 9,90</p>
   <button class="botao" onclick="add('Slide Bob Esponja',9.9)">Adicionar</button>
-</div><!-- SHREK --><div class="card" data-cat="canva">
+</div>
+
+<!-- SHREK -->
+<div class="card" data-cat="canva">
   <div class="slider">
     <img src="imagens/ShrekSlide.png" class="ativo zoomable">
     <img src="imagens/ShrekSlide2.png" class="zoomable">
     <img src="imagens/ShrekSlide3.png" class="zoomable">
   </div>
-  <button class="botao" onclick="mudarSlide(this, -1)">⬅</button>
-  <button class="botao" onclick="mudarSlide(this, 1)">➡</button>
+
   <h3>Slide Shrek</h3>
   <p class="preco">R$ 9,90</p>
   <button class="botao" onclick="add('Slide Shrek',9.9)">Adicionar</button>
-</div><!-- CHARLIE BROWN (CORRIGIDO) --><div class="card" data-cat="ppt">
-  <div class="slider">
-    <img src="imagens/CharlieBrown1.png" class="ativo zoomable">
-    <img src="imagens/CharlieBrown2.png" class="zoomable">
-    <img src="imagens/CharlieBrown3.png" class="zoomable">
-  </div>
-  <button class="botao" onclick="mudarSlide(this, -1)">⬅</button>
-  <button class="botao" onclick="mudarSlide(this, 1)">➡</button>
-  <h3>Slide Charlie Brown</h3>
-  <p class="preco">R$ 8,00</p>
-  <button class="botao" onclick="add('Slide Charlie Brown',8)">Adicionar</button>
-</div></div><div class="carrinho">
+</div>
+
+</div>
+
+<!-- CARRINHO -->
+<div class="carrinho">
 <h2>Carrinho</h2>
 <ul id="lista"></ul>
 <p>Total: R$ <span id="total">0</span></p>
 <button class="botao" onclick="finalizarWhatsApp()">Finalizar no WhatsApp</button>
-</div><div class="lightbox" id="lightbox" onclick="fecharZoom()">
+</div>
+
+<!-- ZOOM -->
+<div class="lightbox" id="lightbox" onclick="fecharZoom()">
   <img id="imgZoom">
-</div><script>
+</div>
+
+<script>
 let carrinho = [];
-function add(nome, preco){ carrinho.push({nome,preco}); atualizar(); }
-function remover(i){ carrinho.splice(i,1); atualizar(); }
+
+function add(nome, preco){
+ carrinho.push({nome,preco});
+ atualizar();
+}
+
+function remover(i){
+ carrinho.splice(i,1);
+ atualizar();
+}
 
 function atualizar(){
  let lista=document.getElementById('lista');
  let total=0;
  lista.innerHTML='';
+
  carrinho.forEach((item,i)=>{
   let li=document.createElement('li');
-  li.innerHTML = item.nome+' - R$ '+item.preco.toFixed(2)+` <span class='remover' onclick='remover(${i})'>X</span>`;
+  li.innerHTML = item.nome+' - R$ '+item.preco.toFixed(2)+
+  ` <span class='remover' onclick='remover(${i})'>X</span>`;
   lista.appendChild(li);
   total+=item.preco;
  });
+
  document.getElementById('total').textContent=total.toFixed(2);
 }
 
 function filtrar(cat, ev){
  document.querySelectorAll('.filtro span').forEach(e=>e.classList.remove('ativo'));
  ev.target.classList.add('ativo');
+
  document.querySelectorAll('.card').forEach(c=>{
   c.style.display = (cat==='todos' || c.dataset.cat===cat) ? 'block' : 'none';
  });
@@ -117,31 +175,79 @@ function filtrar(cat, ev){
 
 function finalizarWhatsApp(){
  if(carrinho.length==0){ alert('Carrinho vazio'); return; }
+
  let total = carrinho.reduce((s,i)=>s+i.preco,0);
  let msg = 'Olá, quero comprar:%0A%0A';
- carrinho.forEach(i=> msg += '🛒 '+i.nome+' - R$ '+i.preco.toFixed(2)+'%0A');
+
+ carrinho.forEach(i=>{
+  msg += '🛒 '+i.nome+' - R$ '+i.preco.toFixed(2)+'%0A';
+ });
+
  msg += '%0A💰 Total: R$ '+total.toFixed(2);
+
  window.open('https://wa.me/5599999999999?text='+msg);
 }
 
-function mudarSlide(btn, direcao){
- let slider = btn.parentElement.querySelector('.slider');
+/* SLIDE + SWIPE + CLICK */
+document.querySelectorAll('.slider').forEach(slider=>{
  let imgs = slider.querySelectorAll('img');
- let atual = [...imgs].findIndex(img=>img.classList.contains('ativo'));
- imgs[atual].classList.remove('ativo');
- let novo = (atual + direcao + imgs.length) % imgs.length;
- imgs[novo].classList.add('ativo');
-}
+ let index = 0;
+ let startX = 0;
 
-// zoom
-
-document.querySelectorAll('.zoomable').forEach(img=>{
- img.onclick = () => {
-  document.getElementById('lightbox').style.display = 'flex';
-  document.getElementById('imgZoom').src = img.src;
+ function mostrar(i){
+  imgs[index].classList.remove('ativo');
+  index = (i + imgs.length) % imgs.length;
+  imgs[index].classList.add('ativo');
  }
+
+ // clique troca
+ slider.addEventListener('click', ()=>{
+  mostrar(index+1);
+ });
+
+ // swipe
+ slider.addEventListener('touchstart', e=>{
+  startX = e.touches[0].clientX;
+ });
+
+ slider.addEventListener('touchend', e=>{
+  let endX = e.changedTouches[0].clientX;
+
+  if(startX - endX > 50) mostrar(index+1); // esquerda
+  else if(endX - startX > 50) mostrar(index-1); // direita
+ });
 });
 
-function fecharZoom(){ document.getElementById('lightbox').style.display = 'none'; }
-</script></body>
+/* ZOOM COM TROCA */
+let imagensAtuais = [];
+let indexZoom = 0;
+
+document.querySelectorAll('.slider').forEach(slider=>{
+ let imgs = slider.querySelectorAll('.zoomable');
+
+ imgs.forEach((img, i)=>{
+  img.onclick = (e)=>{
+   e.stopPropagation();
+
+   imagensAtuais = [...imgs];
+   indexZoom = i;
+
+   document.getElementById('lightbox').style.display='flex';
+   document.getElementById('imgZoom').src = img.src;
+  }
+ });
+});
+
+document.getElementById('imgZoom').onclick = function(e){
+ e.stopPropagation();
+ indexZoom = (indexZoom+1)%imagensAtuais.length;
+ this.src = imagensAtuais[indexZoom].src;
+};
+
+function fecharZoom(){
+ document.getElementById('lightbox').style.display='none';
+}
+</script>
+
+</body>
 </html>
